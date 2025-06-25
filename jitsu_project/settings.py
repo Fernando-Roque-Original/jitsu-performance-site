@@ -25,8 +25,11 @@ SECRET_KEY = 'django-insecure-jt#-c3m%6)s*zm3-_*p-w88dn#rj07lkytqo3rykz7es8+uq&p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    'jitsu-performance-site.onrender.com',
+    'localhost',
+    '127.0.0.1',
+]
 
 # Application definition
 
