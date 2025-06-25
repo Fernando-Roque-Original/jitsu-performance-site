@@ -116,10 +116,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+# Em jitsu_project/settings.py
+
 STATIC_URL = 'static/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+# ---- ADICIONE ESTAS LINHAS ----
+# O local onde o collectstatic irá reunir todos os ficheiros para produção
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# A configuração para o WhiteNoise servir os ficheiros estáticos
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# -------------------------------
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
