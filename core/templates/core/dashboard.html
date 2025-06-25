@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - JitsuPerformance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --cor-fundo: #1a1a2e; --cor-painel: #162447; --cor-card: #1f4068;
+            --cor-borda: #0f3460; --cor-texto: #e0e0e0; --cor-texto-sec: #a0a0a2;
+            --cor-vermelho: #e43f5a; --cor-azul: #3d98ff;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--cor-fundo); margin: 0; padding: 20px; color: var(--cor-texto); }
+        .container { max-width: 1200px; margin: auto; }
+        a { text-decoration: none; color: var(--cor-azul); }
+
+        /* Cabeçalho */
+        .profile-header { display: flex; align-items: center; background: var(--cor-painel); padding: 20px; border-radius: 12px; }
+        .profile-pic { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--cor-borda); object-fit: cover; margin-right: 20px; background-color: #333; }
+        .profile-info { flex-grow: 1; }
+        .profile-info h2 { margin: 0; font-size: 1.8em; }
+        .logout-link { color: var(--cor-vermelho); font-weight: bold; }
+        .belt-container { margin-top: 10px; display: flex; align-items: center; gap: 10px; }
+        .belt-container .label { font-size: 0.9em; color: var(--cor-texto-sec); }
+        .belt-display { width: 200px; height: 30px; border-radius: 3px; position: relative; border: 1px solid rgba(0,0,0,0.4); overflow: hidden; }
+        .red-tip { position: absolute; right: 10px; top: 0; bottom: 0; width: 40%; background-color: var(--cor-vermelho); border-left: 2px solid #000; }
+        .black-tip { position: absolute; right: 10px; top: 0; bottom: 0; width: 40%; background-color: #1a1a1a; border-left: 2px solid #000; display: flex; align-items: center; padding-left: 8px; gap: 5px; }
+        .stripe { height: 75%; width: 5px; background-color: white; border-radius: 1px; }
+
+        /* Layout de Conteúdo Geral */
+        .content-layout { display: flex; gap: 30px; margin-top: 20px; }
+        .side-menu { flex: 0 0 250px; }
+        .side-menu h3 { margin-top: 0; font-size: 1.8em; }
+        .menu-item { background: var(--cor-painel); padding: 15px; margin-bottom: 10px; border-radius: 8px; cursor: pointer; border-left: 5px solid transparent; transition: all 0.2s; }
+        .menu-item:hover, .menu-item.active { background: var(--cor-card); border-left-color: var(--cor-vermelho) !important; }
+        .main-content { flex-grow: 1; }
+        .main-content h3 { margin-top: 0; font-size: 1.8em; }
+        .content-card { background: var(--cor-card); border-radius: 8px; padding: 20px; margin-bottom: 15px; }
+        .content-card h4 { margin-top: 0; font-size: 1.5em; color: var(--cor-vermelho); }
+        .content-card h5 { margin: 15px 0 5px 0; color: var(--cor-texto-sec); text-transform: uppercase; font-size: 0.8em;}
+        .content-card ul { padding-left: 20px; list-style-type: none; }
+        .content-card li { margin-bottom: 8px; }
+        .locked { opacity: 0.4; pointer-events: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="profile-header animate__animated animate__fadeInDown">
+            <img src="{{ perfil.foto_perfil.url }}" alt="Foto de Perfil" class="profile-pic">
+            <div class="profile-info">
+                <h2>{{ user.first_name|default:user.username }}</h2>
+                <a href="{% url 'editar_perfil' %}">Editar Perfil</a>
+                {% if perfil.cargo == 'PROFESSOR' %}
+                    <div class="belt-container">
+                        <span class="label">Cargo:</span>
+                        <div class="belt-display" style="background-color: #000000;" title="Professor">
+                            <div class="red-tip"></div>
+                        </div>
+                    </div>
+                {% elif perfil.cargo == 'ALUNO' and perfil.faixa_atual and perfil.grau_atual %}
+                    <div class="belt-container">
+                        <span class="label">Faixa:</span>
+                        <div class="belt-display" style="background-color: {{ perfil.faixa_atual.cor_hex }};" title="{{ perfil.faixa_atual.nome }} - {{perfil.grau_atual.numero}}º Grau">
+                            <div class="black-tip">
+                                {% if perfil.grau_atual.numero > 0 %}{% for i in ""|ljust:perfil.grau_atual.numero %}<span class="stripe"></span>{% endfor %}{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <a href="{% url 'logout' %}" class="logout-link">Sair</a>
+        </header>
+
+        <main>
+            <div class="content-layout">
+                <nav class="side-menu animate__animated animate__fadeInLeft">
+                    {% if perfil.cargo == 'PROFESSOR' %}
+                        <h3>Todas as Faixas</h3>
+                        {% for faixa in faixas %}
+                            <div class="menu-item" data-url="{% url 'carregar_faixa' faixa.id %}" style="border-left-color: {{ faixa.cor_hex }};">
+                                <h4>{{ faixa.nome }}</h4>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <h3>Sua Jornada</h3>
+                        {% if perfil.faixa_atual %}
+                            <div class="menu-item" data-url="{% url 'carregar_graus' perfil.faixa_atual.id %}">
+                                <h4>Faixa {{ perfil.faixa_atual.nome }}</h4>
+                            </div>
+                        {% else %}
+                            <p>Complete seu perfil para iniciar a jornada.</p>
+                        {% endif %}
+                    {% endif %}
+                </nav>
+                <div class="main-content" id="main-content-area">
+                    <h3>Selecione um item no menu para começar</h3>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuItems = document.querySelectorAll('.menu-item');
+            const contentArea = document.getElementById('main-content-area');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    const url = this.dataset.url;
+                    contentArea.innerHTML = '<h3>A carregar conteúdo...</h3>';
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(html => { contentArea.innerHTML = html; })
+                        .catch(error => { contentArea.innerHTML = '<h3>Ocorreu um erro.</h3>'; console.error('Erro:', error); });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

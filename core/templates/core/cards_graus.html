@@ -1,0 +1,10 @@
+<h3>Graus e Técnicas</h3>
+{% for grau in graus %}
+    <div class="content-card {% if grau.numero > perfil.grau_atual.numero %}locked{% endif %}">
+        <h4>{{ grau.numero }}º Grau: {{ grau.titulo }} {% if grau.numero > perfil.grau_atual.numero %}<span>&#128274;</span>{% endif %}</h4>
+        {% if grau.numero <= perfil.grau_atual.numero %}
+            {% else %}
+            <p>Complete os graus anteriores para desbloquear.</p>
+        {% endif %}
+    </div>
+{% endfor %}

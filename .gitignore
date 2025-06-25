@@ -1,0 +1,17 @@
+# Ambientes Virtuais
+venv/
+.env
+
+# Ficheiros de Banco de Dados
+db.sqlite3
+*.sqlite3
+
+# Ficheiros de Mídia (Uploads de Usuários)
+/media/
+
+# Ficheiros de Cache do Python
+__pycache__/
+*.pyc
+
+# Ficheiros de Configuração do VS Code
+.vscode/

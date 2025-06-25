@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Bem-vindo!</title>
+    <style>/* Pode copiar o CSS da página de login aqui para manter o estilo */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: white; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.pexels.com/photos/6624423/pexels-photo-6624423.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+        .choice-box { background-color: rgba(20, 20, 20, 0.8); padding: 40px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); width: 450px; text-align: center; }
+        .choice-box h2 { margin-bottom: 10px; } .choice-box p { margin-bottom: 30px; font-size: 1.1em; }
+        .choice-box button { width: 100%; padding: 15px; border: none; border-radius: 5px; background-color: #007bff; color: white; font-size: 1.2em; cursor: pointer; transition: background-color 0.3s; margin-bottom: 15px; }
+        .choice-box button:hover { background-color: #0056b3; }
+        .choice-box button.secondary { background-color: #6c757d; }
+        .choice-box button.secondary:hover { background-color: #5a6268; }
+    </style>
+</head>
+<body>
+    <div class="choice-box">
+        <h2>Bem-vindo à JitsuPerformance, {{ user.username }}!</h2>
+        <p>Para começar a sua jornada, por favor, escolha o seu caminho:</p>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" name="escolha" value="iniciante">Sou Iniciante, Começar do Zero (Faixa Branca)</button>
+            <button type="submit" name="escolha" value="questionario" class="secondary">Já Tenho Experiência (Fazer Teste de Nivelamento)</button>
+        </form>
+    </div>
+</body>
+</html>

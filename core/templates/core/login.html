@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - JitsuPerformance</title>
+    <style>
+        /* CSS para a página inteira */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            /* O fundo de Jiu-Jitsu! */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.pexels.com/photos/6624423/pexels-photo-6624423.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Caixa de Login */
+        .login-box {
+            background-color: rgba(20, 20, 20, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 320px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .login-box h2 {
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-box button:hover {
+            background-color: #0056b3;
+        }
+
+        .login-box p {
+            margin-top: 20px;
+        }
+        
+        .login-box a {
+            color: #00aaff;
+            text-decoration: none;
+        }
+
+        /* Secção de História */
+        .history-section {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 50px 20px;
+            flex-wrap: wrap;
+        }
+
+        .history-block {
+            background-color: rgba(20, 20, 20, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            width: 280px;
+            text-align: left;
+        }
+
+        .history-block h3 {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="login-box">
+        <h2>Aceder à Plataforma</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Nome de Usuário" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+        <p>Não tem uma conta?</p>
+        <a href="{% url 'registo_aluno' %}">Criar Conta de Aluno</a> | 
+        <a href="{% url 'registo_professor' %}">Candidatar-se a Professor</a>
+    </div>
+
+    <div class="history-section">
+        <div class="history-block">
+            <h3>As Origens</h3>
+            <p>O Jiu-Jitsu, ou "arte suave", tem as suas raízes no Japão feudal, mas foi no Brasil que se transformou na arte marcial que conhecemos hoje, através da família Gracie, que adaptou as técnicas para focar no combate de chão e alavancagem.</p>
+        </div>
+        <div class="history-block">
+            <h3>A Filosofia</h3>
+            <p>A principal filosofia do Jiu-Jitsu é permitir que uma pessoa mais pequena e fraca se defenda contra um oponente maior e mais forte, usando técnica, timing e alavancagem em vez de força bruta. É o xadrez do corpo humano.</p>
+        </div>
+        <div class="history-block">
+            <h3>Crescimento Global</h3>
+            <p>Com a criação do UFC (Ultimate Fighting Championship) e as vitórias dominantes de Royce Gracie, o mundo testemunhou a eficácia do Jiu-Jitsu, levando à sua explosão em popularidade global e tornando-o uma base essencial para lutadores de MMA.</p>
+        </div>
+    </div>
+
+</body>
+</html>

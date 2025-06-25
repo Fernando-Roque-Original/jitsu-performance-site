@@ -1,0 +1,30 @@
+<h3>Graus e Técnicas</h3>
+
+{% for grau in graus %}
+    <div class="content-card animate__animated animate__fadeInUp {% if grau.numero > perfil.grau_atual.numero %}locked{% endif %}" style="animation-delay: {{ forloop.counter0 }}00ms;">
+
+        <h4>{{ grau.numero }}º Grau: {{ grau.titulo }} {% if grau.numero > perfil.grau_atual.numero %}<span>&#128274;</span>{% endif %}</h4>
+
+        {% if grau.numero <= perfil.grau_atual.numero %}
+            {% regroup grau.tecnicas.all by topico as topicos_list %}
+
+            {% for topico in topicos_list %}
+                <h5>{{ topico.grouper }}</h5>
+                <ul>
+                    {% for tecnica in topico.list %}
+                        <li>{{ tecnica.titulo }}</li>
+                    {% endfor %}
+                </ul>
+            {% empty %}
+                <p>Nenhuma técnica cadastrada para este grau.</p>
+            {% endfor %}
+
+            <a href="#">Estudar Grau</a>
+        {% else %}
+            <p>Complete os graus anteriores para desbloquear este conteúdo.</p>
+        {% endif %}
+
+    </div>
+{% empty %}
+    <p>Nenhum grau cadastrado para esta faixa ainda.</p>
+{% endfor %}

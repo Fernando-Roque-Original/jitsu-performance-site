@@ -1,0 +1,22 @@
+<h3>Detalhes da Faixa: {{ faixa.nome }}</h3>
+
+{% for grau in faixa.graus.all %}
+    <div class="content-card">
+        <h4>{{ grau.numero }}º Grau: {{ grau.titulo }}</h4>
+        {% regroup grau.tecnicas.all by topico as topicos_list %}
+        {% for topico in topicos_list %}
+            <h5>{{ topico.grouper }}</h5>
+            <ul>
+                {% for tecnica in topico.list %}
+                    <li>{{ tecnica.titulo }}</li>
+                {% empty %}
+                    <li>Nenhuma técnica cadastrada para este tópico.</li>
+                {% endfor %}
+            </ul>
+        {% empty %}
+            <p>Nenhum tópico cadastrado para este grau.</p>
+        {% endfor %}
+    </div>
+{% empty %}
+    <p>Nenhum grau cadastrado para esta faixa.</p>
+{% endfor %}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Candidatura Recebida</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; color: white; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.pexels.com/photos/6624423/pexels-photo-6624423.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+        .message-box { background-color: rgba(20, 20, 20, 0.8); padding: 40px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); width: 400px; text-align: center; }
+        .message-box h2 { color: #28a745; }
+        .message-box a { color: #00aaff; }
+    </style>
+</head>
+<body>
+    <div class="message-box">
+        <h2>Candidatura Recebida!</h2>
+        <p>A sua candidatura para a posição de professor foi recebida com sucesso. A sua conta será revista por um administrador em breve. Obrigado!</p>
+        <br>
+        <a href="{% url 'homepage' %}">Voltar à página inicial</a>
+    </div>
+</body>
+</html>
